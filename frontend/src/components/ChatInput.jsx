@@ -12,7 +12,7 @@ export function Chatinput({chatMessages,setChatMessages})
 
     async function SendMessage() {
 
-       
+        if (!inputText.trim()) return;
 
         const newMessages =[
             ...chatMessages,
@@ -26,7 +26,7 @@ export function Chatinput({chatMessages,setChatMessages})
         setChatMessages(newMessages);
 
         try {
-            const response =await fetch("http://localhost:3001/chat",{
+            const response =await fetch("https://react-ai-chatbot-nr6r.onrender.com/chat",{
                 method : "POST",
                 headers : {
                     "content-type":"application/json"
