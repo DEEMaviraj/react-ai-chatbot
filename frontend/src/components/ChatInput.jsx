@@ -55,16 +55,22 @@ export function Chatinput({chatMessages,setChatMessages})
         
 
         setInputText('');
-    } 
+    }
+    
+    function handleKeyDown(event) {
+        if (event.key === "Enter") {
+         SendMessage()
+        }
+    }
 
     return(
         <div className="chat-input-container">
             <input 
                 className="chat-input"
-                placeholder="Send a message" 
-                width="300px" 
+                placeholder="Send a message"  
                 onChange={saveInput}
                 value={inputText}
+                onKeyDown={handleKeyDown}
             />
             <button className="send-button" width="50px" onClick={SendMessage}>Send</button>
         </div>
