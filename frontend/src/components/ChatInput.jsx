@@ -25,6 +25,8 @@ export function Chatinput({chatMessages,setChatMessages})
 
         setChatMessages(newMessages);
 
+         setInputText('');
+
         try {
             const response =await fetch("https://react-ai-chatbot-nr6r.onrender.com/chat",{
                 method : "POST",
@@ -52,13 +54,10 @@ export function Chatinput({chatMessages,setChatMessages})
             console.error(error);
         }
 
-        
-
-        setInputText('');
     }
     
     function handleKeyDown(event) {
-        if (event.key === "Enter") {
+        if (event.key === "Enter" && inputText.trim()) {
          SendMessage()
         }
     }
