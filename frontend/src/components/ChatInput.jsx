@@ -22,10 +22,11 @@ export function Chatinput({chatMessages,setChatMessages})
                 id:crypto.randomUUID()
             }
         ];
+        setInputText('');
 
         setChatMessages(newMessages);
 
-         setInputText('');
+         
 
         try {
             const response =await fetch("https://react-ai-chatbot-nr6r.onrender.com/chat",{
@@ -38,7 +39,7 @@ export function Chatinput({chatMessages,setChatMessages})
                 })                
             });
             
-
+            setInputText('');
             const data = await response.json();
 
             setChatMessages( [
@@ -58,7 +59,7 @@ export function Chatinput({chatMessages,setChatMessages})
     
     function handleKeyDown(event) {
         if (event.key === "Enter" && inputText.trim()) {
-         SendMessage()
+            SendMessage()
         }
     }
 
