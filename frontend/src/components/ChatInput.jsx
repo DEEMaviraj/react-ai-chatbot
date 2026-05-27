@@ -26,7 +26,16 @@ export function Chatinput({chatMessages,setChatMessages})
 
         setChatMessages(newMessages);
 
-         
+        const typingId = crypto.randomUUID();
+
+        setChatMessages([
+        ...newMessages,
+        {
+            sender: "bot",
+            message: "Typing...",
+            id: typingId
+        }
+        ]);
 
         try {
             const response =await fetch("https://react-ai-chatbot-nr6r.onrender.com/chat",{
@@ -42,17 +51,30 @@ export function Chatinput({chatMessages,setChatMessages})
             setInputText('');
             const data = await response.json();
 
-            setChatMessages( [
-            ...newMessages,
-            {
-                sender:'bot',
-                message:data.reply,
-                id:crypto.randomUUID()
-            }
-            ]
+            setChatMessages(prev =>
+            prev.map(msg =>
+                msg.id === typingId
+                    ? {
+                        sender: "bot",
+                        message: data.reply,
+                        id: typingId
+                    }
+                    : msg
+                )
             );
         } catch (error) {
             console.error(error);
+            setChatMessages(prev =>
+            prev.map(msg =>
+                msg.id === typingId
+                    ? {
+                        sender: "bot",
+                        message: "Somthing went wrong",
+                        id: typingId
+                    }
+                    : msg
+            )
+        );
         }
 
     }
